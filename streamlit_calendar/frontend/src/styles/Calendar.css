@@ -1,7 +1,31 @@
 :root {
-    --fc-page-bg-color: var(--background-color);
-    --fc-neutral-bg-color: var(--secondary-background-color);
+    --fc-page-bg-color: transparent;
+    --fc-neutral-bg-color: transparent;
     --fc-neutral-text-color: var(--text-color);
     --fc-button-bg-color: var(--primary-color);
-    --fc-list-event-hover-bg-color: var(--secondary-background-color);
+    --fc-list-event-hover-bg-color: rgba(0, 0, 0, 0.03);
+    --fc-border-color: rgba(0, 0, 0, 0.1);
+    --fc-today-bg-color: rgba(255, 255, 0, 0.1);
+}
+
+/* Force all FullCalendar backgrounds to be transparent */
+.fc,
+.fc-view-harness,
+.fc-scrollgrid,
+.fc-scrollgrid table,
+.fc-scrollgrid-section,
+.fc-scrollgrid-section > td,
+.fc-timegrid,
+.fc-timegrid-body,
+.fc-daygrid,
+.fc-daygrid-body,
+.fc-theme-standard td,
+.fc-theme-standard th {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Keep event colors visible */
+.fc-event {
+    filter: none !important;
 }

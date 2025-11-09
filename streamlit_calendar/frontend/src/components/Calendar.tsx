@@ -213,35 +213,38 @@ const CalendarFC: React.FC<Props> = ({
     Streamlit.setFrameHeight()
   }, [])
 
-  return (
-    <FullCalendarWrapper $customCSS={custom_css}>
-      <FullCalendar
-        ref={calendarRef}
-        plugins={ENABLED_PLUGINS}
-        events={events}
-        schedulerLicenseKey={license_key}
-        dateClick={
-          callbacks?.includes("dateClick") ? handleDateClick : undefined
-        }
-        eventClick={
-          callbacks?.includes("eventClick") ? handleEventClick : undefined
-        }
-        eventChange={
-          callbacks?.includes("eventChange") ? handleEventChange : undefined
-        }
-        eventsSet={
-          callbacks?.includes("eventsSet") ? handleEventsSet : undefined
-        }
-        select={
-          callbacks?.includes("select") ? handleSelect : undefined
-        }
-        eventDidMount={
-          callbacks?.includes("eventMouseEnter") ? handleEventDidMount : undefined
-        }
-        {...options}
-      />
-    </FullCalendarWrapper>
-  )
+return (
+  <FullCalendarWrapper $customCSS={custom_css}>
+    <FullCalendar
+      ref={calendarRef}
+      plugins={ENABLED_PLUGINS}
+      events={events}
+      schedulerLicenseKey={license_key}
+      // ADD THESE TWO LINES:
+      height="auto"
+      contentHeight="auto"
+      dateClick={
+        callbacks?.includes("dateClick") ? handleDateClick : undefined
+      }
+      eventClick={
+        callbacks?.includes("eventClick") ? handleEventClick : undefined
+      }
+      eventChange={
+        callbacks?.includes("eventChange") ? handleEventChange : undefined
+      }
+      eventsSet={
+        callbacks?.includes("eventsSet") ? handleEventsSet : undefined
+      }
+      select={
+        callbacks?.includes("select") ? handleSelect : undefined
+      }
+      eventDidMount={
+        callbacks?.includes("eventMouseEnter") ? handleEventDidMount : undefined
+      }
+      {...options}
+    />
+  </FullCalendarWrapper>
+)
 }
 
 export default withStreamlitConnection(CalendarFC)
