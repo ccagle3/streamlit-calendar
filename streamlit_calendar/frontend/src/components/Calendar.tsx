@@ -11,7 +11,7 @@ import resourceTimeGridPlugin from "@fullcalendar/resource-timegrid" // premium
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline" // premium
 import timeGridPlugin from "@fullcalendar/timegrid"
 import timelinePlugin from "@fullcalendar/timeline" // premium
-import rrulePlugin from "@fullcalendar/rrule"; //
+import rrulePlugin from "@fullcalendar/rrule"
 
 import {
   CalendarOptions,
@@ -57,7 +57,13 @@ const ENABLED_PLUGINS = [
   rrulePlugin,
 ]
 
+const GlobalStyle = styled.div`
+  background: transparent !important;
+  min-height: 100vh;
+`
+
 const FullCalendarWrapper = styled.div<{ $customCSS?: string }>`
+  background: transparent !important;
   ${(props) => props.$customCSS}
 `
 
@@ -100,20 +106,20 @@ const CalendarFC: React.FC<Props> = ({
   }
 
   // Use a WeakMap to associate elements with their listeners
-  const mouseEnterListeners = React.useRef(new WeakMap<HTMLElement, EventListener>()).current;
+  const mouseEnterListeners = React.useRef(new WeakMap<HTMLElement, EventListener>()).current
 
   // This is called by FullCalendar for each event after it is mounted
   const handleEventDidMount = (info: { event: EventApi; el: HTMLElement; view: ViewApi }) => {
     if (callbacks?.includes("eventMouseEnter")) {
       // Remove any previous listener to avoid duplicates
-      const prevListener = mouseEnterListeners.get(info.el);
+      const prevListener = mouseEnterListeners.get(info.el)
       if (prevListener) {
-        info.el.removeEventListener("mouseenter", prevListener);
+        info.el.removeEventListener("mouseenter", prevListener)
       }
       // Create and store the listener
-      const listener = () => handleEventMouseEnter(info.event, info.view);
-      mouseEnterListeners.set(info.el, listener);
-      info.el.addEventListener("mouseenter", listener);
+      const listener = () => handleEventMouseEnter(info.event, info.view)
+      mouseEnterListeners.set(info.el, listener)
+      info.el.addEventListener("mouseenter", listener)
     }
   }
 
@@ -162,8 +168,8 @@ const CalendarFC: React.FC<Props> = ({
       },
       relatedEvents: arg.relatedEvents.map((related) => related.toJSON()),
       ...(calendarRef.current?.getApi() && {
-        view: getViewValue(calendarRef.current.getApi().view)
-      })
+        view: getViewValue(calendarRef.current.getApi().view),
+      }),
     }
 
     const componentValue: EventChangeComponentValue = {
@@ -181,9 +187,9 @@ const CalendarFC: React.FC<Props> = ({
         resourceId: event.getResources()[0]?.id,
       })),
       ...(calendarRef.current?.getApi() && {
-        view: getViewValue(calendarRef.current.getApi().view)
-      })
-    };
+        view: getViewValue(calendarRef.current.getApi().view),
+      }),
+    }
     const componentValue: EventsSetComponentValue = {
       callback: "eventsSet",
       eventsSet,
@@ -213,38 +219,27 @@ const CalendarFC: React.FC<Props> = ({
     Streamlit.setFrameHeight()
   }, [])
 
-return (
-  <FullCalendarWrapper $customCSS={custom_css}>
-    <FullCalendar
-      ref={calendarRef}
-      plugins={ENABLED_PLUGINS}
-      events={events}
-      schedulerLicenseKey={license_key}
-      // ADD THESE TWO LINES:
-      height="auto"
-      contentHeight="auto"
-      dateClick={
-        callbacks?.includes("dateClick") ? handleDateClick : undefined
-      }
-      eventClick={
-        callbacks?.includes("eventClick") ? handleEventClick : undefined
-      }
-      eventChange={
-        callbacks?.includes("eventChange") ? handleEventChange : undefined
-      }
-      eventsSet={
-        callbacks?.includes("eventsSet") ? handleEventsSet : undefined
-      }
-      select={
-        callbacks?.includes("select") ? handleSelect : undefined
-      }
-      eventDidMount={
-        callbacks?.includes("eventMouseEnter") ? handleEventDidMount : undefined
-      }
-      {...options}
-    />
-  </FullCalendarWrapper>
-)
+  return (
+    <GlobalStyle>
+      <FullCalendarWrapper $customCSS={custom_css}>
+        <FullCalendar
+          ref={calendarRef}
+          plugins={ENABLED_PLUGINS}
+          events={events}
+          schedulerLicenseKey={license_key}
+          height="auto"
+          contentHeight="auto"
+          dateClick={callbacks?.includes("dateClick") ? handleDateClick : undefined}
+          eventClick={callbacks?.includes("eventClick") ? handleEventClick : undefined}
+          eventChange={callbacks?.includes("eventChange") ? handleEventChange : undefined}
+          eventsSet={callbacks?.includes("eventsSet") ? handleEventsSet : undefined}
+          select={callbacks?.includes("select") ? handleSelect : undefined}
+          eventDidMount={callbacks?.includes("eventMouseEnter") ? handleEventDidMount : undefined}
+          {...options}
+        />
+      </FullCalendarWrapper>
+    </GlobalStyle>
+  )
 }
 
 export default withStreamlitConnection(CalendarFC)

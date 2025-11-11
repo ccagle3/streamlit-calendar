@@ -1,31 +1,99 @@
-:root {
-    --fc-page-bg-color: transparent;
-    --fc-neutral-bg-color: transparent;
-    --fc-neutral-text-color: var(--text-color);
-    --fc-button-bg-color: var(--primary-color);
-    --fc-list-event-hover-bg-color: rgba(0, 0, 0, 0.03);
-    --fc-border-color: rgba(0, 0, 0, 0.1);
-    --fc-today-bg-color: rgba(255, 255, 0, 0.1);
+/* Transparent iframe document */
+html, body, #root, #root > div, .react-root {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
-/* Force all FullCalendar backgrounds to be transparent */
-.fc,
-.fc-view-harness,
-.fc-scrollgrid,
-.fc-scrollgrid table,
-.fc-scrollgrid-section,
-.fc-scrollgrid-section > td,
-.fc-timegrid,
-.fc-timegrid-body,
-.fc-daygrid,
-.fc-daygrid-body,
+/* FullCalendar theme vars: make grid/list layers transparent */
+:root, .fc, .fc-theme-standard {
+  --fc-page-bg-color: transparent !important;
+  --fc-neutral-bg-color: transparent !important;
+  --fc-list-event-hover-bg-color: rgba(0,0,0,.04) !important;
+  --fc-border-color: rgba(0,0,0,.10) !important;
+  --fc-today-bg-color: rgba(255,255,0,.10) !important;
+}
+
+/* ✅ The ONLY place we paint “glass” */
+.fc {
+  background: rgba(255,255,255,.55) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-radius: 16px !important;
+  padding: 10px !important;
+  box-shadow: 0 6px 24px rgba(0,0,0,.08) !important;
+}
+
+/* ❌ Remove your previous “EVERY SINGLE ELEMENT” rule.
+   ✅ Instead: make structural layers transparent so the single glass layer shows through */
+.fc .fc-view-harness,
+.fc .fc-view-harness-active,
+.fc .fc-scrollgrid,
+.fc .fc-scrollgrid table,
+.fc .fc-scrollgrid-section,
+.fc .fc-scroller,
+.fc .fc-scroller-liquid,
+.fc .fc-timegrid,
+.fc .fc-timegrid-body,
+.fc .fc-timegrid-slots,
+.fc .fc-timegrid-slot,
+.fc .fc-timegrid-axis,
+.fc .fc-timegrid-bg,
+.fc .fc-timegrid-cols,
+.fc .fc-daygrid,
+.fc .fc-daygrid-body,
+.fc .fc-daygrid-day,
+.fc .fc-daygrid-day-frame,
+.fc .fc-list,
+.fc .fc-col-header,
+.fc .fc-col-header-cell,
+.fc .fc-col-header-cell *,
+.fc-theme-standard th,
+.fc .fc-week-number,              /* left “W 46” cell */
+.fc .fc-week-number * {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.fc .fc-list-sticky,
 .fc-theme-standard td,
 .fc-theme-standard th {
-    background: transparent !important;
-    background-color: transparent !important;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
-/* Keep event colors visible */
-.fc-event {
-    filter: none !important;
+/* Toolbar glass (lighter than main slab) */
+.fc .fc-toolbar {
+  background: rgba(255,255,255,.45) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-radius: 12px !important;
+  padding: 6px 8px !important;
+  margin-bottom: 8px !important;
+  box-shadow: 0 6px 24px rgba(0,0,0,.08) !important;
 }
+.fc .fc-toolbar-title {
+  color: #111 !important;
+  font-weight: 600 !important;
+}
+.fc .fc-button-primary {
+  background: rgba(255,255,255,.35) !important;
+  border: 1px solid rgba(0,0,0,.12) !important;
+  color: #111 !important;
+}
+.fc .fc-button-primary:hover {
+  background: rgba(255,255,255,.55) !important;
+}
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+  background: rgba(59,130,246,.25) !important;
+  border-color: rgba(59,130,246,.40) !important;
+}
+
+/* Events keep their chip colors; improve contrast */
+.fc-event, .fc-event-main { filter: none !important; }
+.fc-event-title, .fc-event-time {
+  color: #fff !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35) !important;
+}
+
+
+
+/* Mini-calendar styles you had can stay below if you use them */
