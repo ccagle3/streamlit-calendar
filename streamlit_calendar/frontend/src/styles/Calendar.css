@@ -13,7 +13,7 @@ html, body, #root, #root > div, .react-root {
   --fc-today-bg-color: rgba(255,255,0,.10) !important;
 }
 
-/* ✅ The ONLY place we paint “glass” */
+/* ✅ Single “glass” layer on the root */
 .fc {
   background: rgba(255,255,255,.55) !important;
   backdrop-filter: blur(8px) !important;
@@ -23,8 +23,7 @@ html, body, #root, #root > div, .react-root {
   box-shadow: 0 6px 24px rgba(0,0,0,.08) !important;
 }
 
-/* ❌ Remove your previous “EVERY SINGLE ELEMENT” rule.
-   ✅ Instead: make structural layers transparent so the single glass layer shows through */
+/* Make the structural layers transparent so the glass shows through */
 .fc .fc-view-harness,
 .fc .fc-view-harness-active,
 .fc .fc-scrollgrid,
@@ -48,7 +47,7 @@ html, body, #root, #root > div, .react-root {
 .fc .fc-col-header-cell,
 .fc .fc-col-header-cell *,
 .fc-theme-standard th,
-.fc .fc-week-number,              /* left “W 46” cell */
+.fc .fc-week-number,
 .fc .fc-week-number * {
   background: transparent !important;
   background-color: transparent !important;
@@ -87,13 +86,14 @@ html, body, #root, #root > div, .react-root {
   border-color: rgba(59,130,246,.40) !important;
 }
 
-/* Events keep their chip colors; improve contrast */
+/* Event readability */
 .fc-event, .fc-event-main { filter: none !important; }
 .fc-event-title, .fc-event-time {
   color: #fff !important;
   text-shadow: 0 1px 2px rgba(0,0,0,.35) !important;
 }
 
-
-
-/* Mini-calendar styles you had can stay below if you use them */
+/* (Optional) if you kept any experimental rules: make sure these are OFF
+   .fc .fc-view-harness { background: transparent !important; padding: 0 !important; box-shadow: none !important; border-radius: 0 !important; overflow: visible !important; }
+   .fc, .fc .fc-view-harness, .fc .fc-view-harness .fc-view { height: auto !important; }
+*/
